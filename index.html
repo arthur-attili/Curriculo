@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="description" content="Portfólio de Arthur Attili - Desenvolvedor Web Fullstack">
-  <title>Arthur Attili | Desenvolvedor Web</title>
-  <!-- Fonts + Icons -->
+  <title>Arthur Attili · Dev Fullstack</title>
+  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- AOS (scroll animations) -->
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <style>
     * {
@@ -18,104 +18,108 @@
 
     body {
       font-family: 'Inter', sans-serif;
-      background: #05050A;
-      color: #EDF2F8;
+      background: #03050b;
+      color: #eef2ff;
       line-height: 1.5;
-      scroll-behavior: smooth;
       overflow-x: hidden;
+      cursor: default;
     }
 
-    /* Fundo animado */
-    .bg-animation {
+    /* Custom cursor (opcional, suave) */
+    .cursor {
+      width: 8px;
+      height: 8px;
+      background: #60a5fa;
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      transition: transform 0.1s;
+      mix-blend-mode: difference;
+    }
+
+    /* Fundo com gradiente animado + partículas estilo Adam */
+    .bg-aura {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
       z-index: -2;
-      background: radial-gradient(circle at 10% 20%, rgba(21, 21, 40, 0.9), rgba(5, 5, 10, 0.95));
+      background: radial-gradient(circle at 20% 30%, #0a0f1e, #02040c);
     }
-
-    .bg-animation::before {
+    .bg-aura::after {
       content: '';
       position: absolute;
-      width: 200%;
-      height: 200%;
-      top: -50%;
-      left: -50%;
-      background: radial-gradient(circle, rgba(59,130,246,0.15) 0%, rgba(139,92,246,0.08) 50%, transparent 70%);
-      animation: rotateBg 30s linear infinite;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 70% 60%, rgba(59,130,246,0.08) 0%, transparent 60%);
+      animation: pulseGlow 12s infinite alternate;
+    }
+    @keyframes pulseGlow {
+      0% { opacity: 0.4; transform: scale(1);}
+      100% { opacity: 1; transform: scale(1.2);}
     }
 
-    @keyframes rotateBg {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+    /* Partículas flutuantes (simples) */
+    .particle {
+      position: fixed;
+      background: rgba(96,165,250,0.3);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: -1;
+      filter: blur(2px);
     }
 
-    ::-webkit-scrollbar {
-      width: 8px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #0f0f1a;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #3b82f6;
-      border-radius: 10px;
-    }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #0f1220; }
+    ::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 10px; }
 
     .container {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 0 1.5rem;
+      padding: 0 2rem;
     }
 
+    /* Glassmorphism refinado */
     .glass-card {
-      background: rgba(20, 27, 45, 0.5);
+      background: rgba(15, 25, 45, 0.45);
       backdrop-filter: blur(12px);
-      border: 1px solid rgba(59,130,246,0.2);
+      border: 1px solid rgba(59,130,246,0.25);
       border-radius: 2rem;
-      transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      transition: all 0.35s ease;
     }
-
     .glass-card:hover {
-      border-color: rgba(96,165,250,0.6);
-      transform: translateY(-6px);
-      box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(96,165,250,0.2);
+      border-color: #3b82f6;
+      transform: translateY(-5px);
+      box-shadow: 0 20px 35px -12px rgba(0,0,0,0.6), 0 0 0 1px rgba(59,130,246,0.3);
     }
 
     .gradient-text {
-      background: linear-gradient(135deg, #93c5fd, #c084fc, #60a5fa);
+      background: linear-gradient(135deg, #a5f3fc, #7c3aed, #60a5fa);
       background-clip: text;
       -webkit-background-clip: text;
       color: transparent;
     }
 
-    .section-title {
-      font-size: 2.5rem;
-      font-weight: 700;
-      margin-bottom: 2.5rem;
-      text-align: center;
-      letter-spacing: -0.02em;
-    }
-
+    /* Botões interativos */
     .btn-primary {
       display: inline-flex;
       align-items: center;
       gap: 0.6rem;
-      background: linear-gradient(95deg, #2563eb, #7c3aed);
-      padding: 0.85rem 2rem;
+      background: linear-gradient(95deg, #1e40af, #6d28d9);
+      padding: 0.8rem 1.8rem;
       border-radius: 3rem;
       font-weight: 600;
       color: white;
       text-decoration: none;
-      transition: all 0.3s;
+      transition: all 0.25s;
       border: none;
       cursor: pointer;
       position: relative;
       overflow: hidden;
       z-index: 1;
     }
-
     .btn-primary::before {
       content: '';
       position: absolute;
@@ -124,61 +128,49 @@
       width: 100%;
       height: 100%;
       background: linear-gradient(95deg, #3b82f6, #a855f7);
-      transition: left 0.4s;
+      transition: left 0.35s;
       z-index: -1;
     }
-
-    .btn-primary:hover::before {
-      left: 0;
-    }
-
-    .btn-primary:hover {
-      transform: scale(1.02);
-      box-shadow: 0 8px 20px rgba(37,99,235,0.4);
-    }
+    .btn-primary:hover::before { left: 0; }
+    .btn-primary:hover { transform: scale(1.02); box-shadow: 0 5px 15px rgba(59,130,246,0.5); }
 
     .btn-outline {
       display: inline-flex;
       align-items: center;
-      gap: 0.6rem;
+      gap: 0.5rem;
       background: transparent;
       border: 1.5px solid #3b82f6;
-      padding: 0.75rem 1.8rem;
+      padding: 0.7rem 1.6rem;
       border-radius: 3rem;
       font-weight: 500;
       color: #e2e8f0;
-      text-decoration: none;
-      transition: 0.25s;
+      transition: 0.2s;
     }
-
     .btn-outline:hover {
       background: rgba(59,130,246,0.15);
       border-color: #60a5fa;
       transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(59,130,246,0.2);
     }
 
-    /* Navbar */
+    /* Navbar fixa com blur */
     .navbar {
       position: fixed;
       top: 0;
       width: 100%;
-      background: rgba(5, 5, 10, 0.75);
+      background: rgba(3,5,11,0.7);
       backdrop-filter: blur(16px);
       z-index: 1000;
       border-bottom: 1px solid rgba(59,130,246,0.2);
       padding: 1rem 0;
     }
-
     .nav-container {
       display: flex;
       justify-content: space-between;
       align-items: center;
       max-width: 1200px;
       margin: 0 auto;
-      padding: 0 1.5rem;
+      padding: 0 2rem;
     }
-
     .logo {
       font-size: 1.8rem;
       font-weight: 800;
@@ -187,280 +179,139 @@
       -webkit-background-clip: text;
       color: transparent;
     }
+    .nav-links { display: flex; gap: 2rem; }
+    .nav-links a { color: #cbd5e6; text-decoration: none; font-weight: 500; transition: 0.2s; }
+    .nav-links a:hover { color: #60a5fa; }
+    .menu-toggle { display: none; font-size: 1.8rem; background: none; border: none; color: white; cursor: pointer; }
 
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-    }
-
-    .nav-links a {
-      color: #cbd5e6;
-      text-decoration: none;
-      font-weight: 500;
-      transition: 0.2s;
-    }
-
-    .nav-links a:hover {
-      color: #60a5fa;
-    }
-
-    .menu-toggle {
-      display: none;
-      font-size: 1.8rem;
-      background: none;
-      border: none;
-      color: white;
-      cursor: pointer;
-    }
-
-    /* Hero */
+    /* Hero section estilo Adam: título grande + texto rotativo */
     .hero {
       min-height: 100vh;
       display: flex;
       align-items: center;
       padding-top: 5rem;
     }
-
-    .hero-content {
-      max-width: 800px;
-    }
-
+    .hero-content { max-width: 850px; }
     .hero-badge {
-      background: rgba(96,165,250,0.15);
-      padding: 0.4rem 1.2rem;
+      background: rgba(96,165,250,0.12);
+      padding: 0.3rem 1rem;
       border-radius: 2rem;
       width: fit-content;
-      font-size: 0.9rem;
-      border: 1px solid rgba(96,165,250,0.4);
-      backdrop-filter: blur(4px);
+      font-size: 0.85rem;
+      border: 1px solid rgba(96,165,250,0.3);
       margin-bottom: 1.5rem;
     }
-
-    .hero h1 {
-      font-size: 3.8rem;
-      font-weight: 800;
-      line-height: 1.2;
-      margin-bottom: 1rem;
+    .hero h1 { font-size: 4rem; font-weight: 800; line-height: 1.2; margin-bottom: 1.2rem; }
+    .rotating-text {
+      display: inline-block;
+      background: linear-gradient(135deg, #c084fc, #60a5fa);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      border-right: 2px solid #60a5fa;
+      padding-right: 8px;
+      animation: blinkCursor 0.8s infinite;
     }
+    @keyframes blinkCursor { 0%,100%{border-color:#60a5fa} 50%{border-color:transparent} }
+    .hero p { font-size: 1.2rem; color: #9ca3af; margin: 1.5rem 0 2rem; max-width: 600px; }
 
-    .hero p {
-      font-size: 1.2rem;
-      color: #9ca3af;
-      margin-bottom: 2rem;
-    }
-
-    /* Skills grid */
+    /* Skills grid - cards bonitos */
     .skills-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-      gap: 1rem;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1rem;
     }
-
-    .skill-item {
-      background: rgba(30, 41, 59, 0.6);
-      padding: 0.7rem 1rem;
-      border-radius: 2rem;
+    .skill-card {
+      background: rgba(12, 20, 35, 0.6);
+      backdrop-filter: blur(8px);
+      border-radius: 1.5rem;
+      padding: 1.2rem 0.8rem;
       text-align: center;
-      font-weight: 500;
-      backdrop-filter: blur(4px);
-      transition: all 0.2s;
-      border: 1px solid transparent;
+      transition: all 0.3s;
+      border: 1px solid rgba(59,130,246,0.2);
     }
+    .skill-card:hover { transform: translateY(-6px); border-color: #3b82f6; background: rgba(30,41,59,0.7); }
+    .skill-icon { font-size: 2.2rem; margin-bottom: 0.6rem; color: #60a5fa; }
+    .skill-name { font-weight: 600; font-size: 0.95rem; }
+    .skill-level { font-size: 0.7rem; color: #94a3b8; margin-top: 0.3rem; letter-spacing: 1px; }
 
-    .skill-item:hover {
-      background: #2563eb;
-      color: white;
-      transform: translateY(-3px);
-      border-color: #93c5fd;
-    }
-
-    /* Projects */
+    /* Projetos */
     .projects-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 2rem;
     }
-
-    .project-card {
-      padding: 1.6rem;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .project-icon {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-      color: #60a5fa;
-    }
-
-    .project-tech {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin: 1rem 0;
-    }
-
-    .tech-tag {
-      background: rgba(59,130,246,0.2);
-      padding: 0.2rem 0.8rem;
-      border-radius: 2rem;
-      font-size: 0.75rem;
-    }
-
-    .project-link {
-      margin-top: auto;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      color: #93c5fd;
-      text-decoration: none;
-      font-weight: 500;
-      transition: 0.2s;
-    }
-
-    .project-link:hover {
-      gap: 0.8rem;
-      color: white;
-    }
+    .project-card { padding: 1.5rem; display: flex; flex-direction: column; }
+    .project-icon { font-size: 2.2rem; margin-bottom: 0.8rem; color: #60a5fa; }
+    .project-tech { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1rem 0; }
+    .tech-tag { background: rgba(59,130,246,0.2); padding: 0.2rem 0.7rem; border-radius: 2rem; font-size: 0.7rem; }
 
     /* Timeline */
-    .timeline {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-    }
-
+    .timeline { display: flex; flex-direction: column; gap: 1.5rem; }
     .timeline-item {
-      background: rgba(15, 23, 42, 0.5);
+      background: rgba(15,23,42,0.5);
       padding: 1.5rem;
       border-radius: 1.5rem;
       border-left: 4px solid #3b82f6;
       transition: 0.2s;
     }
+    .timeline-item:hover { background: rgba(30,41,59,0.6); transform: translateX(6px); }
+    .timeline-date { font-size: 0.85rem; color: #94a3b8; margin-bottom: 0.5rem; }
 
-    .timeline-item:hover {
-      background: rgba(30, 41, 59, 0.6);
-      transform: translateX(6px);
-    }
-
-    .timeline-date {
-      font-size: 0.85rem;
-      color: #94a3b8;
-      margin-bottom: 0.5rem;
-    }
-
-    /* Contact */
+    /* Contato */
     .contact-form {
-      max-width: 600px;
+      max-width: 550px;
       margin: 0 auto;
-      background: rgba(15, 23, 42, 0.5);
+      background: rgba(15,23,42,0.5);
       padding: 2rem;
       border-radius: 2rem;
-      backdrop-filter: blur(8px);
     }
-
     input, textarea {
       width: 100%;
-      padding: 0.9rem 1rem;
+      padding: 0.9rem;
       background: rgba(0,0,0,0.4);
-      border: 1px solid rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.1);
       border-radius: 1rem;
       color: white;
       font-family: inherit;
-      transition: 0.2s;
     }
+    input:focus, textarea:focus { outline: none; border-color: #3b82f6; }
 
-    input:focus, textarea:focus {
-      outline: none;
-      border-color: #3b82f6;
-      box-shadow: 0 0 0 3px rgba(59,130,246,0.3);
-    }
+    footer { text-align: center; padding: 2rem; margin-top: 3rem; color: #6b7280; border-top: 1px solid rgba(255,255,255,0.05); }
 
-    footer {
-      text-align: center;
-      padding: 2rem;
-      border-top: 1px solid rgba(255,255,255,0.05);
-      margin-top: 4rem;
-      color: #6b7280;
-    }
-
-    /* Tooltip para copiar e-mail */
-    .copy-tooltip {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #1e293b;
-      color: #93c5fd;
-      padding: 0.5rem 1rem;
-      border-radius: 2rem;
-      font-size: 0.9rem;
-      z-index: 2000;
-      backdrop-filter: blur(8px);
-      border: 1px solid #3b82f6;
-      animation: fadeOut 2s forwards;
-    }
-
-    @keyframes fadeOut {
-      0% { opacity: 1; }
-      70% { opacity: 1; }
-      100% { opacity: 0; visibility: hidden; }
-    }
-
+    /* Responsivo */
     @media (max-width: 768px) {
-      .nav-links {
-        display: none;
-        flex-direction: column;
-        position: absolute;
-        top: 70px;
-        left: 0;
-        width: 100%;
-        background: rgba(5,5,10,0.95);
-        backdrop-filter: blur(20px);
-        padding: 1.5rem;
-        gap: 1.5rem;
-        text-align: center;
-      }
-      .nav-links.active {
-        display: flex;
-      }
-      .menu-toggle {
-        display: block;
-      }
-      .hero h1 {
-        font-size: 2.5rem;
-      }
-      .section-title {
-        font-size: 2rem;
-      }
+      .nav-links { display: none; flex-direction: column; position: absolute; top: 70px; left: 0; width: 100%; background: rgba(3,5,11,0.95); backdrop-filter: blur(20px); padding: 1.5rem; gap: 1rem; text-align: center; }
+      .nav-links.active { display: flex; }
+      .menu-toggle { display: block; }
+      .hero h1 { font-size: 2.5rem; }
+      .container { padding: 0 1.2rem; }
+      .skills-grid { grid-template-columns: repeat(auto-fill, minmax(130px,1fr)); gap: 1rem; }
     }
   </style>
 </head>
 <body>
-<div class="bg-animation"></div>
+<div class="bg-aura"></div>
+<div class="cursor" id="cursor"></div>
 
 <nav class="navbar">
   <div class="nav-container">
     <div class="logo">&lt;AA /&gt;</div>
     <button class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button>
     <div class="nav-links" id="navLinks">
-      <a href="#home">Início</a>
-      <a href="#about">Sobre</a>
-      <a href="#skills">Skills</a>
-      <a href="#projects">Projetos</a>
-      <a href="#experience">Trajetória</a>
-      <a href="#contact">Contato</a>
+      <a href="#home">Início</a><a href="#about">Sobre</a><a href="#skills">Skills</a><a href="#projects">Projetos</a><a href="#experience">Trajetória</a><a href="#contact">Contato</a>
     </div>
   </div>
 </nav>
 
 <main>
-  <!-- Hero -->
+  <!-- Hero com texto rotativo (estilo Adam) -->
   <section id="home" class="hero">
-    <div class="container hero-content" data-aos="fade-up" data-aos-duration="1000" data-aos-easing="ease-out-quad">
-      <div class="hero-badge"><i class="fas fa-code"></i> Desenvolvedor Web Fullstack</div>
-      <h1>Arthur Attili<br><span class="gradient-text">Back-end & Integração</span></h1>
-      <p>Ribeirão Preto, SP · Disponível para novos desafios · Inglês Intermediário</p>
+    <div class="container hero-content" data-aos="fade-up">
+      <div class="hero-badge"><i class="fas fa-terminal"></i> fullstack · back-end · integração</div>
+      <h1>Arthur Attili <br> <span class="rotating-text" id="rotatingRole"></span></h1>
+      <p>Ribeirão Preto, SP · disponível para novos desafios · Inglês Intermediário</p>
       <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
         <a href="#contact" class="btn-primary"><i class="fas fa-paper-plane"></i> Vamos conversar</a>
         <button id="copyEmailBtn" class="btn-outline"><i class="fas fa-envelope"></i> Copiar e-mail</button>
@@ -470,76 +321,61 @@
 
   <!-- Sobre -->
   <section id="about" class="container" style="padding: 4rem 0;">
-    <div class="section-title" data-aos="fade-up" data-aos-duration="800">Sobre <span class="gradient-text">mim</span></div>
-    <div style="max-width: 850px; margin: 0 auto; text-align: center;" data-aos="fade-up" data-aos-delay="100" data-aos-duration="800">
-      <p style="font-size: 1.1rem; color: #cbd5e6;">
-        Estudante de Ciência da Computação (7º período) – UNIP. Atuo como <strong>Desenvolvedor Web</strong>, com foco em back-end e integração com servidores.<br><br>
-        Stack atual: <strong>Python, Django, HTML, CSS, JavaScript, PostgreSQL</strong>. Realizo interações com servidores via SSH para deploy e manutenção.<br><br>
-        Experiência anterior: Atuei como Analista de Suporte em ERP e em outras posições na área de TI, o que desenvolveu minha capacidade de diagnóstico de problemas, compreensão de fluxos de sistema e comunicação com usuários finais – habilidades que utilizo até hoje no desenvolvimento.<br><br>
-        <strong>Objetivo técnico:</strong> Evoluir continuamente no ecossistema Python/web, aprofundar conhecimentos em banco de dados relacional, otimização de queries e boas práticas de versionamento (Git). Busco desafios que exijam soluções escaláveis e integração entre sistemas.
-      </p>
-      <div style="display: flex; justify-content: center; gap: 2rem; margin-top: 2rem; flex-wrap: wrap;">
-        <div data-aos="fade-right" data-aos-delay="150"><i class="fas fa-map-marker-alt"></i> Ribeirão Preto, SP</div>
-        <div data-aos="fade-up" data-aos-delay="200"><i class="fas fa-clock"></i> Disponível imediatamente</div>
-        <div data-aos="fade-left" data-aos-delay="250"><i class="fas fa-globe"></i> Inglês Intermediário</div>
+    <div class="section-title" data-aos="fade-up" style="font-size:2.5rem; text-align:center; margin-bottom:2rem;">Sobre <span class="gradient-text">mim</span></div>
+    <div style="max-width:800px; margin:0 auto; text-align:center;" data-aos="fade-up" data-aos-delay="100">
+      <p style="color:#cbd5e6;">Estudante de Ciência da Computação (7º período) – UNIP. Atuo como <strong>Desenvolvedor Web</strong>, foco em back-end e integração com servidores.<br><br>
+      Stack atual: <strong>Python, Django, HTML/CSS, JavaScript, PostgreSQL</strong>. Realizo interações via SSH para deploy e manutenção.<br><br>
+      Experiência anterior como Analista de Suporte ERP desenvolveu minha capacidade de diagnóstico e comunicação – habilidades que uso até hoje no desenvolvimento.<br><br>
+      <strong>Objetivo:</strong> Evoluir no ecossistema Python/web, otimização de queries e boas práticas com Git. Busco soluções escaláveis e integração entre sistemas.</p>
+      <div style="display:flex; justify-content:center; gap:2rem; margin-top:2rem; flex-wrap:wrap;">
+        <div><i class="fas fa-map-marker-alt"></i> Ribeirão Preto, SP</div>
+        <div><i class="fas fa-clock"></i> Disponível imediatamente</div>
+        <div><i class="fas fa-globe"></i> Inglês Intermediário</div>
       </div>
     </div>
   </section>
 
-  <!-- Skills -->
+  <!-- Skills com ícones (igual ao que fizemos antes, mas com visual aprimorado) -->
   <section id="skills" class="container" style="padding: 2rem 0 4rem;">
-    <div class="section-title" data-aos="fade-up" data-aos-duration="800">Competências <span class="gradient-text">Técnicas</span></div>
-    <div class="skills-grid" data-aos="fade-up" data-aos-delay="100">
-      <div class="skill-item" data-aos="zoom-in" data-aos-delay="50">Python</div>
-      <div class="skill-item" data-aos="zoom-in" data-aos-delay="80">Django</div>
-      <div class="skill-item" data-aos="zoom-in" data-aos-delay="110">JavaScript</div>
-      <div class="skill-item" data-aos="zoom-in" data-aos-delay="140">Node.js</div>
-      <div class="skill-item" data-aos="zoom-in" data-aos-delay="170">PostgreSQL</div>
-      <div class="skill-item" data-aos="zoom-in" data-aos-delay="200">HTML/CSS</div>
-      <div class="skill-item" data-aos="zoom-in" data-aos-delay="230">TailwindCSS</div>
-      <div class="skill-item" data-aos="zoom-in" data-aos-delay="260">Servidor SSH</div>
-      <div class="skill-item" data-aos="zoom-in" data-aos-delay="290">Docker</div>
-      <div class="skill-item" data-aos="zoom-in" data-aos-delay="320">Git</div>
-      <div class="skill-item" data-aos="zoom-in" data-aos-delay="350">Desenvolvimento Web</div>
-      <div class="skill-item" data-aos="zoom-in" data-aos-delay="380">ERP (Sistemas)</div>
+    <div class="section-title" data-aos="fade-up" style="font-size:2.5rem; text-align:center; margin-bottom:2rem;">Competências <span class="gradient-text">Técnicas</span></div>
+    <div class="skills-grid" data-aos="fade-up">
+      <div class="skill-card"><div class="skill-icon"><i class="fab fa-python"></i></div><div class="skill-name">Python</div><div class="skill-level">Avançado</div></div>
+      <div class="skill-card"><div class="skill-icon"><i class="fab fa-django"></i></div><div class="skill-name">Django</div><div class="skill-level">Intermediário</div></div>
+      <div class="skill-card"><div class="skill-icon"><i class="fab fa-js"></i></div><div class="skill-name">JavaScript</div><div class="skill-level">Intermediário</div></div>
+      <div class="skill-card"><div class="skill-icon"><i class="fab fa-node-js"></i></div><div class="skill-name">Node.js</div><div class="skill-level">Intermediário</div></div>
+      <div class="skill-card"><div class="skill-icon"><i class="fas fa-database"></i></div><div class="skill-name">PostgreSQL</div><div class="skill-level">Avançado</div></div>
+      <div class="skill-card"><div class="skill-icon"><i class="fab fa-html5"></i></div><div class="skill-name">HTML/CSS</div><div class="skill-level">Avançado</div></div>
+      <div class="skill-card"><div class="skill-icon"><i class="fas fa-terminal"></i></div><div class="skill-name">Servidor SSH</div><div class="skill-level">Avançado</div></div>
+      <div class="skill-card"><div class="skill-icon"><i class="fab fa-docker"></i></div><div class="skill-name">Docker</div><div class="skill-level">Intermediário</div></div>
+      <div class="skill-card"><div class="skill-icon"><i class="fab fa-git-alt"></i></div><div class="skill-name">Git</div><div class="skill-level">Avançado</div></div>
+      <div class="skill-card"><div class="skill-icon"><i class="fas fa-laptop-code"></i></div><div class="skill-name">Desenvolvimento Web</div><div class="skill-level">Fullstack</div></div>
+      <div class="skill-card"><div class="skill-icon"><i class="fas fa-chart-line"></i></div><div class="skill-name">ERP (Sistemas)</div><div class="skill-level">Avançado</div></div>
     </div>
   </section>
 
   <!-- Projetos -->
   <section id="projects" class="container" style="padding: 2rem 0 4rem;">
-    <div class="section-title" data-aos="fade-up">Projetos em <span class="gradient-text">destaque</span></div>
+    <div class="section-title" data-aos="fade-up" style="font-size:2.5rem; text-align:center; margin-bottom:2rem;">Projetos em <span class="gradient-text">destaque</span></div>
     <div class="projects-grid">
-      <div class="glass-card project-card" data-aos="flip-left" data-aos-duration="700">
+      <div class="glass-card project-card" data-aos="flip-left">
         <div class="project-icon"><i class="fas fa-building"></i></div>
         <h3>Site Maxcon Assessoria</h3>
-        <p>Site institucional completo com visualização de cartas contempladas. Desenvolvido com Python, Django, PostgreSQL, e configurado com SSH próprio.</p>
-        <div class="project-tech">
-          <span class="tech-tag">Python/Django</span>
-          <span class="tech-tag">PostgreSQL</span>
-          <span class="tech-tag">HTML/CSS/JS</span>
-          <span class="tech-tag">SSL/SSH</span>
-        </div>
-        <a href="https://www.maxconconsorcios.com.br/" target="_blank" class="project-link">Acessar site →</a>
+        <p>Site institucional com visualização de cartas contempladas. Python, Django, PostgreSQL, SSH.</p>
+        <div class="project-tech"><span class="tech-tag">Django</span><span class="tech-tag">PostgreSQL</span><span class="tech-tag">SSL</span></div>
+        <a href="https://www.maxconconsorcios.com.br/" target="_blank" class="project-link" style="color:#93c5fd;">Acessar →</a>
       </div>
-      <div class="glass-card project-card" data-aos="flip-left" data-aos-duration="700" data-aos-delay="150">
+      <div class="glass-card project-card" data-aos="flip-left" data-aos-delay="100">
         <div class="project-icon"><i class="fas fa-chart-line"></i></div>
         <h3>Relatórios de desempenho (Maxcon)</h3>
-        <p>Dashboards internos para métricas da equipe: ligações, agendamentos, perdas e ganhos. Banco PostgreSQL e consultas otimizadas.</p>
-        <div class="project-tech">
-          <span class="tech-tag">PostgreSQL</span>
-          <span class="tech-tag">Python</span>
-          <span class="tech-tag">SQL</span>
-        </div>
-        <span class="project-link" style="opacity:0.7;">🔒 Uso interno (sem link público)</span>
+        <p>Dashboards internos: ligações, agendamentos, perdas e ganhos. PostgreSQL + Python.</p>
+        <div class="project-tech"><span class="tech-tag">PostgreSQL</span><span class="tech-tag">Python</span></div>
+        <span class="project-link" style="opacity:0.7;">🔒 Uso interno</span>
       </div>
-      <div class="glass-card project-card" data-aos="flip-left" data-aos-duration="700" data-aos-delay="300">
+      <div class="glass-card project-card" data-aos="flip-left" data-aos-delay="200">
         <div class="project-icon"><i class="fas fa-heartbeat"></i></div>
         <h3>Calculadora de gastos calóricos</h3>
-        <p>Ferramenta para atletas e iniciantes calcularem gasto calórico com base em medidas e atividade física.</p>
-        <div class="project-tech">
-          <span class="tech-tag">HTML/CSS</span>
-          <span class="tech-tag">JavaScript</span>
-        </div>
+        <p>Ferramenta para atletas calcularem gasto calórico.</p>
+        <div class="project-tech"><span class="tech-tag">HTML/CSS</span><span class="tech-tag">JS</span></div>
         <a href="https://arthur-attili.github.io/neuro_calc/" target="_blank" class="project-link">Experimentar →</a>
       </div>
     </div>
@@ -547,114 +383,105 @@
 
   <!-- Experiência profissional -->
   <section id="experience" class="container" style="padding: 2rem 0 4rem;">
-    <div class="section-title" data-aos="fade-up">Trajetória <span class="gradient-text">profissional</span></div>
+    <div class="section-title" data-aos="fade-up" style="font-size:2.5rem; text-align:center; margin-bottom:2rem;">Trajetória <span class="gradient-text">profissional</span></div>
     <div class="timeline">
-      <div class="timeline-item" data-aos="fade-right" data-aos-duration="600">
-        <div class="timeline-date"><i class="far fa-calendar-alt"></i> jul de 2025 – Presente · 10 meses</div>
-        <h3>Desenvolvedor web – Maxcon Consórcios</h3>
-        <p>Desenvolvimento fullstack, foco em back-end, integração com servidores via SSH, manutenção de banco de dados PostgreSQL e deploy de aplicações. Responsável por todo o ciclo de vida do site institucional e sistemas internos.</p>
-      </div>
-      <div class="timeline-item" data-aos="fade-right" data-aos-duration="600" data-aos-delay="100">
-        <div class="timeline-date"><i class="far fa-calendar-alt"></i> out de 2024 – jul de 2025 · 10 meses</div>
-        <h3>Analista de suporte – Citel</h3>
-        <p>Suporte a sistemas ERP, atendimento a clientes, diagnóstico de problemas e compreensão de fluxos de negócio. Desenvolvimento de habilidades de comunicação e resolução de problemas.</p>
-      </div>
-      <div class="timeline-item" data-aos="fade-right" data-aos-duration="600" data-aos-delay="200">
-        <div class="timeline-date"><i class="far fa-calendar-alt"></i> out de 2023 – out de 2024 · 1 ano 1 mês</div>
-        <h3>Suporte técnico – Colégio Terra Cirandinha (Estágio)</h3>
-        <p>Manutenção de hardware/software, suporte a usuários e infraestrutura de TI.</p>
-      </div>
-      <div class="timeline-item" data-aos="fade-right" data-aos-duration="600" data-aos-delay="300">
-        <div class="timeline-date"><i class="fas fa-graduation-cap"></i> mar de 2023 – nov de 2026</div>
-        <h3>Graduation in Computer Science – Universidade Paulista (UNIP)</h3>
-        <p>7º período – Ciência da Computação. Projetos acadêmicos com foco em desenvolvimento web, banco de dados e boas práticas de engenharia de software.</p>
-      </div>
+      <div class="timeline-item" data-aos="fade-right"><div class="timeline-date"><i class="far fa-calendar-alt"></i> jul/2025 – presente</div><h3>Desenvolvedor web – Maxcon Consórcios</h3><p>Fullstack, SSH, PostgreSQL, deploy. Responsável por todo ciclo de vida do site e sistemas internos.</p></div>
+      <div class="timeline-item" data-aos="fade-right" data-aos-delay="100"><div class="timeline-date"><i class="far fa-calendar-alt"></i> out/2024 – jul/2025</div><h3>Analista de suporte – Citel</h3><p>Suporte a ERP, atendimento a clientes, diagnóstico de problemas e fluxos de negócio.</p></div>
+      <div class="timeline-item" data-aos="fade-right" data-aos-delay="200"><div class="timeline-date"><i class="far fa-calendar-alt"></i> out/2023 – out/2024</div><h3>Suporte técnico – Colégio Terra Cirandinha (Estágio)</h3><p>Manutenção de hardware/software e infraestrutura de TI.</p></div>
+      <div class="timeline-item" data-aos="fade-right" data-aos-delay="300"><div class="timeline-date"><i class="fas fa-graduation-cap"></i> 2023 – 2026</div><h3>Graduação em Computer Science – UNIP</h3><p>7º período. Projetos em desenvolvimento web e boas práticas.</p></div>
     </div>
   </section>
 
   <!-- Contato -->
   <section id="contact" class="container" style="padding: 2rem 0 4rem;">
-    <div class="section-title" data-aos="fade-up">Vamos <span class="gradient-text">conversar?</span></div>
-    <div class="contact-form" data-aos="fade-up" data-aos-delay="100" data-aos-duration="800">
+    <div class="section-title" data-aos="fade-up" style="font-size:2.5rem; text-align:center; margin-bottom:2rem;">Vamos <span class="gradient-text">conversar?</span></div>
+    <div class="contact-form" data-aos="fade-up">
       <form id="contactForm">
         <div class="form-group"><input type="text" id="name" placeholder="Seu nome" required></div>
         <div class="form-group"><input type="email" id="email" placeholder="Seu e-mail" required></div>
         <div class="form-group"><textarea rows="4" id="message" placeholder="Fale sobre seu projeto, vaga ou parceria..." required></textarea></div>
         <button type="submit" class="btn-primary" style="width:100%; justify-content:center;"><i class="fas fa-envelope"></i> Enviar mensagem</button>
-        <p style="font-size:0.8rem; margin-top:1rem; text-align:center; color:#6b7280;">Responderei em até 24h</p>
       </form>
-      <div style="display: flex; justify-content: center; gap: 2rem; margin-top: 2rem;">
-        <a href="https://github.com/arthur-attili" target="_blank" style="color:#cbd5e6; font-size: 1.8rem; transition:0.2s;" data-aos="zoom-in" data-aos-delay="150"><i class="fab fa-github"></i></a>
-        <a href="https://www.linkedin.com/in/arthur-attili-a10913252/" target="_blank" style="color:#cbd5e6; font-size: 1.8rem; transition:0.2s;" data-aos="zoom-in" data-aos-delay="200"><i class="fab fa-linkedin"></i></a>
-        <a href="https://wa.me/5516997311100" target="_blank" style="color:#cbd5e6; font-size: 1.8rem; transition:0.2s;" data-aos="zoom-in" data-aos-delay="250"><i class="fab fa-whatsapp"></i></a>
+      <div style="display:flex; justify-content:center; gap:2rem; margin-top:2rem;">
+        <a href="https://github.com/arthur-attili" target="_blank" style="color:#cbd5e6; font-size:1.8rem;"><i class="fab fa-github"></i></a>
+        <a href="https://www.linkedin.com/in/arthur-attili-a10913252/" target="_blank" style="color:#cbd5e6; font-size:1.8rem;"><i class="fab fa-linkedin"></i></a>
+        <a href="https://wa.me/5516997311100" target="_blank" style="color:#cbd5e6; font-size:1.8rem;"><i class="fab fa-whatsapp"></i></a>
       </div>
     </div>
   </section>
 </main>
-
 <footer>
-  <p>© 2025 Arthur Attili - Desenvolvedor Web. Feito com 💻 e ☕</p>
+  <p>© 2025 Arthur Attili · Desenvolvedor Fullstack</p>
 </footer>
 
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
-  // ALTERAÇÃO PRINCIPAL: once: false para animar também ao rolar para cima
-  AOS.init({
-    duration: 800,
-    once: false,        // <-- MUDANÇA AQUI: agora anima sempre que entra na viewport
-    offset: 80,
-    easing: 'ease-out-quad'
-  });
+  AOS.init({ duration: 800, once: false, offset: 60 });
 
   // Menu mobile
   const menuToggle = document.getElementById('menuToggle');
   const navLinks = document.getElementById('navLinks');
   menuToggle.addEventListener('click', () => navLinks.classList.toggle('active'));
-
-  // Smooth scroll
   document.querySelectorAll('.nav-links a').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
       e.preventDefault();
       const target = document.querySelector(this.getAttribute('href'));
-      if (target) {
-        target.scrollIntoView({ behavior: 'smooth' });
-        navLinks.classList.remove('active');
-      }
+      if (target) { target.scrollIntoView({ behavior: 'smooth' }); navLinks.classList.remove('active'); }
     });
   });
 
-  // Botão copiar e-mail
-  const copyBtn = document.getElementById('copyEmailBtn');
-  const emailToCopy = 'arthur.attili@gmail.com'; // Substitua pelo seu e-mail
-
-  function showTooltip(message) {
-    const tooltip = document.createElement('div');
-    tooltip.className = 'copy-tooltip';
-    tooltip.innerText = message;
-    document.body.appendChild(tooltip);
-    setTimeout(() => tooltip.remove(), 2000);
+  // Texto rotativo (estilo Adam)
+  const roles = ["Desenvolvedor Fullstack", "Back-end & Integração", "Desenvolvedor Web", "Solucionador de problemas"];
+  let idx = 0;
+  const rotatingSpan = document.getElementById('rotatingRole');
+  function rotateText() {
+    rotatingSpan.style.opacity = '0';
+    setTimeout(() => {
+      rotatingSpan.textContent = roles[idx];
+      rotatingSpan.style.opacity = '1';
+      idx = (idx + 1) % roles.length;
+    }, 200);
   }
+  setInterval(rotateText, 2800);
+  rotateText();
 
-  copyBtn.addEventListener('click', () => {
-    navigator.clipboard.writeText(emailToCopy).then(() => {
-      showTooltip('📧 E-mail copiado! Aguardo seu contato.');
-    }).catch(() => {
-      showTooltip('❌ Não foi possível copiar. Tente manualmente.');
-    });
-  });
+  // Copiar e-mail
+  const copyBtn = document.getElementById('copyEmailBtn');
+  const email = 'arthur.attili@gmail.com';
+  function showTooltip(msg) {
+    const t = document.createElement('div');
+    t.className = 'copy-tooltip';
+    t.innerText = msg;
+    t.style.position = 'fixed'; t.style.bottom = '20px'; t.style.left = '50%'; t.style.transform = 'translateX(-50%)';
+    t.style.backgroundColor = '#1e293b'; t.style.color = '#93c5fd'; t.style.padding = '0.5rem 1rem'; t.style.borderRadius = '2rem';
+    t.style.zIndex = '2000'; t.style.backdropFilter = 'blur(8px)'; t.style.border = '1px solid #3b82f6';
+    document.body.appendChild(t);
+    setTimeout(() => t.remove(), 2000);
+  }
+  copyBtn.addEventListener('click', () => { navigator.clipboard.writeText(email).then(() => showTooltip('📧 E-mail copiado! Aguardo contato.')); });
 
-  // Formulário de contato (simulação)
+  // Formulário
   const form = document.getElementById('contactForm');
   form.addEventListener('submit', (e) => {
     e.preventDefault();
-    const name = document.getElementById('name').value;
-    if (name.trim() === "") {
-      alert("Por favor, informe seu nome.");
-      return;
-    }
-    alert(`Obrigado ${name}! Sua mensagem foi enviada. Responderei em breve.`);
+    const name = document.getElementById('name').value.trim();
+    if (!name) return alert("Informe seu nome.");
+    alert(`Obrigado ${name}! Sua mensagem foi enviada (simulação). Responderei em breve.`);
     form.reset();
   });
+
+  // Cursor personalizado suave
+  const cursor = document.getElementById('cursor');
+  document.addEventListener('mousemove', (e) => { cursor.style.transform = `translate(${e.clientX - 4}px, ${e.clientY - 4}px)`; });
+  document.addEventListener('mouseleave', () => { cursor.style.opacity = '0'; });
+  document.addEventListener('mouseenter', () => { cursor.style.opacity = '1'; });
 </script>
+<style>
+  .copy-tooltip { animation: fadeOut 2s forwards; }
+  @keyframes fadeOut { 0% { opacity: 1; } 70% { opacity: 1; } 100% { opacity: 0; visibility: hidden; } }
+  #rotatingRole { transition: opacity 0.2s ease; display: inline-block; min-width: 220px; }
+  .project-link { text-decoration: none; font-weight: 500; display: inline-flex; align-items: center; gap: 0.4rem; }
+  .project-link:hover { gap: 0.7rem; color: white; }
+</style>
 </body>
 </html>
