@@ -61,14 +61,17 @@
       100% { opacity: 1; transform: scale(1.2);}
     }
 
-    /* Partículas flutuantes (simples) */
-    .particle {
+    /* Canvas 3D - posicionado entre o fundo e o conteúdo, com blend sutil */
+    #canvas-3d {
       position: fixed;
-      background: rgba(96,165,250,0.3);
-      border-radius: 50%;
-      pointer-events: none;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       z-index: -1;
-      filter: blur(2px);
+      pointer-events: none;
+      display: block;
+      opacity: 0.7;
     }
 
     ::-webkit-scrollbar { width: 6px; }
@@ -81,9 +84,9 @@
       padding: 0 2rem;
     }
 
-    /* Glassmorphism refinado */
+    /* Glassmorphism refinado - aumentando levemente a opacidade do fundo para melhor leitura */
     .glass-card {
-      background: rgba(15, 25, 45, 0.45);
+      background: rgba(15, 25, 45, 0.6);
       backdrop-filter: blur(12px);
       border: 1px solid rgba(59,130,246,0.25);
       border-radius: 2rem;
@@ -157,7 +160,7 @@
       position: fixed;
       top: 0;
       width: 100%;
-      background: rgba(3,5,11,0.7);
+      background: rgba(3,5,11,0.8);
       backdrop-filter: blur(16px);
       z-index: 1000;
       border-bottom: 1px solid rgba(59,130,246,0.2);
@@ -223,7 +226,7 @@
       margin-top: 1rem;
     }
     .skill-card {
-      background: rgba(12, 20, 35, 0.6);
+      background: rgba(12, 20, 35, 0.7);
       backdrop-filter: blur(8px);
       border-radius: 1.5rem;
       padding: 1.2rem 0.8rem;
@@ -231,7 +234,7 @@
       transition: all 0.3s;
       border: 1px solid rgba(59,130,246,0.2);
     }
-    .skill-card:hover { transform: translateY(-6px); border-color: #3b82f6; background: rgba(30,41,59,0.7); }
+    .skill-card:hover { transform: translateY(-6px); border-color: #3b82f6; background: rgba(30,41,59,0.8); }
     .skill-icon { font-size: 2.2rem; margin-bottom: 0.6rem; color: #60a5fa; }
     .skill-name { font-weight: 600; font-size: 0.95rem; }
     .skill-level { font-size: 0.7rem; color: #94a3b8; margin-top: 0.3rem; letter-spacing: 1px; }
@@ -250,28 +253,28 @@
     /* Timeline */
     .timeline { display: flex; flex-direction: column; gap: 1.5rem; }
     .timeline-item {
-      background: rgba(15,23,42,0.5);
+      background: rgba(15,23,42,0.6);
       padding: 1.5rem;
       border-radius: 1.5rem;
       border-left: 4px solid #3b82f6;
       transition: 0.2s;
     }
-    .timeline-item:hover { background: rgba(30,41,59,0.6); transform: translateX(6px); }
+    .timeline-item:hover { background: rgba(30,41,59,0.7); transform: translateX(6px); }
     .timeline-date { font-size: 0.85rem; color: #94a3b8; margin-bottom: 0.5rem; }
 
     /* Contato */
     .contact-form {
       max-width: 550px;
       margin: 0 auto;
-      background: rgba(15,23,42,0.5);
+      background: rgba(15,23,42,0.6);
       padding: 2rem;
       border-radius: 2rem;
     }
     input, textarea {
       width: 100%;
       padding: 0.9rem;
-      background: rgba(0,0,0,0.4);
-      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,255,255,0.15);
       border-radius: 1rem;
       color: white;
       font-family: inherit;
@@ -294,6 +297,9 @@
 <body>
 <div class="bg-aura"></div>
 <div class="cursor" id="cursor"></div>
+
+<!-- Canvas para animações 3D (Three.js) -->
+<canvas id="canvas-3d"></canvas>
 
 <nav class="navbar">
   <div class="nav-container">
@@ -415,7 +421,205 @@
 </footer>
 
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<!-- Three.js biblioteca para animações 3D -->
+<script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.128.0/build/three.module.js"
+    }
+  }
+</script>
+
+<script type="module">
+  import * as THREE from 'three';
+
+  // Configuração da cena 3D
+  const canvas = document.getElementById('canvas-3d');
+  const scene = new THREE.Scene();
+  scene.background = null; // Transparente para ver o gradiente do bg-aura
+
+  // Câmera com perspectiva mais dinâmica
+  const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+  camera.position.set(0, 0, 10);
+  
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setPixelRatio(window.devicePixelRatio);
+
+  // 1. CUBO CENTRAL 3D com wireframe brilhante e faces semitransparentes (robusto e profissional)
+  const cubeSize = 1.8;
+  const geometry = new THREE.BoxGeometry(cubeSize, cubeSize, cubeSize);
+  
+  // Material das faces (vidro fosco)
+  const materials = [
+    new THREE.MeshStandardMaterial({ color: 0x3b82f6, roughness: 0.3, metalness: 0.7, transparent: true, opacity: 0.25 }),
+    new THREE.MeshStandardMaterial({ color: 0x60a5fa, roughness: 0.3, metalness: 0.7, transparent: true, opacity: 0.25 }),
+    new THREE.MeshStandardMaterial({ color: 0x8b5cf6, roughness: 0.3, metalness: 0.7, transparent: true, opacity: 0.25 }),
+    new THREE.MeshStandardMaterial({ color: 0xa78bfa, roughness: 0.3, metalness: 0.7, transparent: true, opacity: 0.25 }),
+    new THREE.MeshStandardMaterial({ color: 0x3b82f6, roughness: 0.3, metalness: 0.7, transparent: true, opacity: 0.25 }),
+    new THREE.MeshStandardMaterial({ color: 0x60a5fa, roughness: 0.3, metalness: 0.7, transparent: true, opacity: 0.25 })
+  ];
+  const cube = new THREE.Mesh(geometry, materials);
+  scene.add(cube);
+  
+  // Wireframe brilhante ao redor do cubo
+  const edgesGeo = new THREE.EdgesGeometry(geometry);
+  const edgesMat = new THREE.LineBasicMaterial({ color: 0x60a5fa, linewidth: 1 });
+  const wireframe = new THREE.LineSegments(edgesGeo, edgesMat);
+  cube.add(wireframe); // anexa ao cubo para rotacionar junto
+  
+  // Partículas orbitando ao redor do cubo (estilo "tecnologia")
+  const orbitParticleCount = 400;
+  const orbitGeometry = new THREE.BufferGeometry();
+  const orbitPositions = new Float32Array(orbitParticleCount * 3);
+  for (let i = 0; i < orbitParticleCount; i++) {
+    // Distribuição em forma de anel e esfera
+    const radius = 2.5 + Math.random() * 1.2;
+    const theta = Math.random() * Math.PI * 2;
+    const phi = Math.acos(2 * Math.random() - 1);
+    const x = radius * Math.sin(phi) * Math.cos(theta);
+    const y = radius * Math.sin(phi) * Math.sin(theta) * 0.8;
+    const z = radius * Math.cos(phi);
+    orbitPositions[i*3] = x;
+    orbitPositions[i*3+1] = y;
+    orbitPositions[i*3+2] = z;
+  }
+  orbitGeometry.setAttribute('position', new THREE.BufferAttribute(orbitPositions, 3));
+  const orbitMaterial = new THREE.PointsMaterial({ color: 0x3b82f6, size: 0.05, transparent: true, opacity: 0.6, blending: THREE.AdditiveBlending });
+  const orbitParticles = new THREE.Points(orbitGeometry, orbitMaterial);
+  scene.add(orbitParticles);
+  
+  // 2. SISTEMA DE ESTRELAS DISTANTES (fundo imersivo)
+  const starCount = 2500;
+  const starGeometry = new THREE.BufferGeometry();
+  const starPositions = new Float32Array(starCount * 3);
+  for (let i = 0; i < starCount; i++) {
+    starPositions[i*3] = (Math.random() - 0.5) * 200;
+    starPositions[i*3+1] = (Math.random() - 0.5) * 100;
+    starPositions[i*3+2] = (Math.random() - 0.5) * 80 - 40;
+  }
+  starGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
+  const starMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 0.12, transparent: true, opacity: 0.7, blending: THREE.AdditiveBlending });
+  const stars = new THREE.Points(starGeometry, starMaterial);
+  scene.add(stars);
+  
+  // 3. ANEL DE PARTÍCULAS EM ÓRBITA (torus de pontos)
+  const ringParticleCount = 800;
+  const ringPointsGeo = new THREE.BufferGeometry();
+  const ringPointsPos = new Float32Array(ringParticleCount * 3);
+  for (let i = 0; i < ringParticleCount; i++) {
+    const angle = (i / ringParticleCount) * Math.PI * 2;
+    const radius = 3.2;
+    const x = Math.cos(angle) * radius;
+    const z = Math.sin(angle) * radius;
+    const y = Math.sin(angle * 3) * 0.5;
+    ringPointsPos[i*3] = x;
+    ringPointsPos[i*3+1] = y;
+    ringPointsPos[i*3+2] = z;
+  }
+  ringPointsGeo.setAttribute('position', new THREE.BufferAttribute(ringPointsPos, 3));
+  const ringPointsMat = new THREE.PointsMaterial({ color: 0x8b5cf6, size: 0.06, transparent: true, opacity: 0.5, blending: THREE.AdditiveBlending });
+  const ringPoints = new THREE.Points(ringPointsGeo, ringPointsMat);
+  scene.add(ringPoints);
+  
+  // 4. PEQUENOS CUBOS FLUTUANTES (estilo "matrix")
+  const floatingCubes = [];
+  const floatCubeCount = 60;
+  for (let i = 0; i < floatCubeCount; i++) {
+    const size = 0.08 + Math.random() * 0.1;
+    const cubeMat = new THREE.MeshStandardMaterial({ color: 0x3b82f6, emissive: 0x1e3a8a, emissiveIntensity: 0.3, transparent: true, opacity: 0.5 });
+    const smallCube = new THREE.Mesh(new THREE.BoxGeometry(size, size, size), cubeMat);
+    const radius = 4 + Math.random() * 2;
+    const angle = Math.random() * Math.PI * 2;
+    const height = (Math.random() - 0.5) * 3;
+    smallCube.position.x = Math.cos(angle) * radius;
+    smallCube.position.z = Math.sin(angle) * radius;
+    smallCube.position.y = height;
+    smallCube.userData = { angle: angle, radius: radius, speed: 0.002 + Math.random() * 0.003, heightOffset: height };
+    scene.add(smallCube);
+    floatingCubes.push(smallCube);
+  }
+  
+  // Luzes para dar profundidade
+  const ambientLight = new THREE.AmbientLight(0x111133, 0.4);
+  scene.add(ambientLight);
+  const mainLight = new THREE.DirectionalLight(0xffffff, 0.8);
+  mainLight.position.set(2, 5, 3);
+  scene.add(mainLight);
+  const fillLight = new THREE.PointLight(0x3b82f6, 0.5);
+  fillLight.position.set(-2, 1, 4);
+  scene.add(fillLight);
+  const backLight = new THREE.PointLight(0x8b5cf6, 0.4);
+  backLight.position.set(0, 2, -5);
+  scene.add(backLight);
+  
+  // Variáveis para rotação suave e interação com mouse (parallax)
+  let mouseX = 0, mouseY = 0;
+  let targetRotationY = 0, targetRotationX = 0;
+  let currentCubeRotY = 0, currentCubeRotX = 0;
+  
+  window.addEventListener('mousemove', (event) => {
+    mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+    mouseY = (event.clientY / window.innerHeight) * 2 - 1;
+    targetRotationY = mouseX * 0.8;
+    targetRotationX = mouseY * 0.5;
+  });
+  
+  let time = 0;
+  
+  function animate() {
+    requestAnimationFrame(animate);
+    time += 0.01;
+    
+    // Rotação suave do cubo com base no mouse + rotação automática
+    currentCubeRotY += (targetRotationY - currentCubeRotY) * 0.05;
+    currentCubeRotX += (targetRotationX - currentCubeRotX) * 0.05;
+    cube.rotation.y = currentCubeRotY;
+    cube.rotation.x = currentCubeRotX;
+    cube.rotation.z += 0.003;
+    
+    // Rotação das partículas orbitais e anel
+    orbitParticles.rotation.y += 0.002;
+    orbitParticles.rotation.x = Math.sin(time * 0.2) * 0.2;
+    ringPoints.rotation.y += 0.003;
+    ringPoints.rotation.z += 0.001;
+    
+    // Estrelas se movem lentamente (efeito de profundidade)
+    stars.rotation.y += 0.0005;
+    stars.rotation.x += 0.0003;
+    
+    // Cubos flutuantes orbitam suavemente
+    floatingCubes.forEach((cubeObj, idx) => {
+      const newAngle = cubeObj.userData.angle + cubeObj.userData.speed;
+      cubeObj.userData.angle = newAngle;
+      cubeObj.position.x = Math.cos(newAngle) * cubeObj.userData.radius;
+      cubeObj.position.z = Math.sin(newAngle) * cubeObj.userData.radius;
+      cubeObj.position.y = cubeObj.userData.heightOffset + Math.sin(time * 1.5 + idx) * 0.15;
+      cubeObj.rotation.x += 0.01;
+      cubeObj.rotation.y += 0.02;
+      cubeObj.rotation.z += 0.015;
+    });
+    
+    // Pequeno movimento de câmera para parallax
+    camera.position.x += (mouseX * 0.3 - camera.position.x) * 0.03;
+    camera.position.y += (-mouseY * 0.2 - camera.position.y) * 0.03;
+    camera.lookAt(0, 0, 0);
+    
+    renderer.render(scene, camera);
+  }
+  
+  animate();
+  
+  window.addEventListener('resize', onWindowResize, false);
+  function onWindowResize() {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  }
+</script>
+
 <script>
+  // Inicializa AOS
   AOS.init({ duration: 800, once: false, offset: 60 });
 
   // Menu mobile
@@ -482,6 +686,16 @@
   #rotatingRole { transition: opacity 0.2s ease; display: inline-block; min-width: 220px; }
   .project-link { text-decoration: none; font-weight: 500; display: inline-flex; align-items: center; gap: 0.4rem; }
   .project-link:hover { gap: 0.7rem; color: white; }
+  
+  #canvas-3d {
+    pointer-events: none;
+    opacity: 0.85;
+  }
+  
+  /* Pequeno sombreamento para melhor contraste do texto */
+  p, h1, h2, h3, .skill-name, .timeline-item p {
+    text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+  }
 </style>
 </body>
 </html>
